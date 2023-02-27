@@ -1,23 +1,53 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import { useState } from "react"
+
 
 function App() {
+  const [isPalindrome, setIsPalindrome] = useState(false);
+  
+  let input 
+  let palindrome = []
+
+  const handleInput = (e) => {
+    input = e.target.value;
+  }
+
+  const reverseWord = (value) => {
+    for (let i = value.length-1; i > -1; i--) {
+      const element = value[i]
+      palindrome.push(element)
+    }
+  }
+
+  const concatWord = () => {
+    palindrome = palindrome.join('');
+  }
+
+  const confirmMatch = () => {
+    if (input === palindrome) { 
+      setIsPalindrome(true)
+    } else {
+      setIsPalindrome(false)
+    }
+  }
+
+  const clearPalindrom = () => {
+    palindrome = []
+  }
+
+  const checkPalindrome = (value) => {
+    reverseWord(value)
+    concatWord()
+    confirmMatch()
+    clearPalindrom()
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input onChange={(e) => handleInput(e)} type="text"/>
+      <button onClick={() => checkPalindrome(input)}>Submit</button>
+      <p>Is it a palindrome: { isPalindrome.toString() }</p>
     </div>
   );
 }
